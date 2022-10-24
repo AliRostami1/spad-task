@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpLoggerModule } from './http-logger/http-logger.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     UserModule,
     AuthModule,
+    HttpLoggerModule.register('http://localhost:3000/user'),
   ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

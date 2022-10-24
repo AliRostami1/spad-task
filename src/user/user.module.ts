@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { compare, hash } from 'bcrypt';
+import { hash } from 'bcrypt';
 import { User, UserSchema } from './schemas/user.schema';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
@@ -25,10 +25,6 @@ import { UserService } from './user.service';
               return next(err);
             }
           });
-
-          schema.methods.validatePassword = function (plainPassword: string) {
-            return compare(plainPassword, this['password']);
-          };
 
           return schema;
         },
