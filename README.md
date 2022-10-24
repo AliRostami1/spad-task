@@ -4,7 +4,7 @@ This repository contains source code for spad job interview task.
 
 ## How to validate
 
-Both tasks are done, in order to test them you can follow there instructions
+Both tasks are done, in order to test them you can follow these instructions
 
 ### Install Dependencies
 
