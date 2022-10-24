@@ -9,10 +9,19 @@ import { User, UserDocument } from './schemas/user.schema';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+  /**
+   *  get all users from db
+   * @returns all users currently registered (without password field)
+   */
   async find() {
     return await this.userModel.find({}, '-password');
   }
 
+  /**
+   * get a user by it's id from db
+   * @param id
+   * @returns user info (without password field)
+   */
   async findById(id: string) {
     const user = await this.userModel.findById(id, '-password');
     if (!user) {
@@ -21,6 +30,11 @@ export class UserService {
     return user;
   }
 
+  /**
+   * get a user by it's email from db
+   * @param email
+   * @returns user info (without password field)
+   */
   async findByEmail(email: string) {
     const user = await this.userModel.findOne({ email: email }, '-password');
     if (!user) {
@@ -29,6 +43,15 @@ export class UserService {
     return user;
   }
 
+  /**
+   * get a user by it's email from db
+   * CAUTION: this method should not be used anywhere
+   * except when we are authenticating users, use
+   * sanitizeUser method to sanitize the result before
+   * sending them to client
+   * @param email
+   * @returns user info (WITH PASSWORD field)
+   */
   async findByEmailUnsafe(email: string) {
     const user = await this.userModel.findOne({ email: email });
     if (!user) {
@@ -37,6 +60,11 @@ export class UserService {
     return user;
   }
 
+  /**
+   * create a user if does not exists already
+   * @param createUserDto
+   * @returns newly created user
+   */
   async create(createUserDto: CreateUserDto) {
     let user = await this.findByEmail(createUserDto.email);
     if (user) {
@@ -47,6 +75,12 @@ export class UserService {
     return this.sanitizeUser(user);
   }
 
+  /**
+   * update a user credit or picture fields
+   * @param id
+   * @param changeUserDto
+   * @returns status of update
+   */
   async update(id: string, changeUserDto: ChangeUserDto) {
     if (
       changeUserDto.credit !== undefined ||
@@ -68,6 +102,11 @@ export class UserService {
     return 'nothing happened';
   }
 
+  /**
+   * remove password field from user
+   * @param user
+   * @returns user without password field
+   */
   sanitizeUser(user: UserDocument) {
     const dirty = user.toObject();
     const { _, ...sanitized } = dirty;

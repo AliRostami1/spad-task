@@ -19,6 +19,11 @@ export class AuthService {
     return null;
   }
 
+  /**
+   * create a JWT token with user's info (non-sensitive ofcourse)
+   * @param user
+   * @returns JWT token
+   */
   async login(user: UserDocument) {
     const payload = { username: user.email, sub: user._id };
     return {
