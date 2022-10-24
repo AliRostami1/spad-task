@@ -13,6 +13,6 @@ export class AppController {
    */
   @Get('send')
   send() {
-    this.httpLoggerService.send();
+    return this.httpLoggerService.send();
   }
 }

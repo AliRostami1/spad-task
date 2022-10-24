@@ -13,8 +13,10 @@ export class HttpLoggerService {
       const res = await fetch(this.endpoint);
       const json = await res.json();
       Logger.log(json);
+      return 'logged the result, check logs';
     } catch (error) {
       Logger.log(error);
+      return 'something went wrong, check logs';
     }
   }
 }
