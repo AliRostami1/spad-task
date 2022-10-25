@@ -12,6 +12,10 @@ Both tasks are done, in order to test them you can follow these instructions
 $ yarn
 ```
 
+### Create .env File
+Create a .env file using the .env.example file as template.
+
+
 ### Run the app
 
 ```bash
